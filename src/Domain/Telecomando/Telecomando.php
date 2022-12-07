@@ -12,6 +12,11 @@ class Telecomando
 
     }
 
+    public function onAndOff() {
+        $status = $this->televisione->isOn();
+        $status === false ? $this->televisione->start() : $this->televisione->shutdown();
+    }
+
     public function showChannel(): int
     {
         return $this->televisione->getChannel();
@@ -24,7 +29,13 @@ class Telecomando
 
     public function setChannel(int $channel): void
     {
-        $this->televisione->setChannel($channel);
+        $status = $this->televisione->isOn();
+        if(!$status) {
+           $this->televisione->start();
+           $this->televisione->setChannel($channel);
+        } else {
+           $this->televisione->setChannel($channel);
+        }
     }
     public function volumeUp(): void
     {

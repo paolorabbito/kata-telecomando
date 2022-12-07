@@ -11,28 +11,33 @@ use Telecomando\Domain\Televisione\Televisione;
 class TelecomandoTest extends TestCase
 {
 
-    public function testShouldReturnCorrectChannel()
+    private Telecomando $telecomando;
+
+    protected function setUp(): void
     {
-        $telecomando = new Telecomando(new Televisione());
-        //$telecomando->setChannel(4);
-        $channel = $telecomando->showChannel();
-        $this->assertEquals(1, $channel);
+        $this->telecomando = new Telecomando(new Televisione());
     }
 
-    public function testShouldReturnCorrectVolumeUp()
+    public function testShouldSetChannel()
     {
-        $telecomando = new Telecomando(new Televisione());
-        $telecomando->volumeUp();
-        $volume = $telecomando->showVolume();
-        $this->assertEquals(51, $volume);
+        $this->telecomando->setChannel(4);
+        $this->assertEquals(4, $this->telecomando->showChannel());
+
+        $this->telecomando->channelUp();
+        $this->assertEquals(5, $this->telecomando->showChannel());
+
+        $this->telecomando->channelDown();
+        $this->assertEquals(4, $this->telecomando->showChannel());
     }
 
-    public function testShouldReturnCorrectVolumeDown()
+    public function testShouldSetCorrectVolume()
     {
-        $telecomando = new Telecomando(new Televisione());
-        $telecomando->volumeDown();
-        $volume = $telecomando->showVolume();
-        $this->assertEquals(49, $volume);
+
+        $this->telecomando->volumeUp();
+        $this->assertEquals(51, $this->telecomando->showVolume());
+
+        $this->telecomando->volumeDown();
+        $this->assertEquals(50, $this->telecomando->showVolume());
     }
 
 }
