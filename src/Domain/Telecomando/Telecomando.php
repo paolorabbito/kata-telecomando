@@ -1,40 +1,41 @@
 <?php
 
-namespace Telecomando\Domain\Sony;
+namespace Telecomando\Domain\Telecomando;
 
 
-use http\Exception\InvalidArgumentException;
-use Telecomando\Domain\TelecomandoRepository;
+use Telecomando\Domain\Televisione\TelecomandoRepository;
+use Telecomando\Domain\Televisione\TelevisioneRepository;
 
-class Telecomando implements TelecomandoRepository
+class Telecomando
 {
-    public function __construct(private Televisione $televisione) {
+    public function __construct(private TelevisioneRepository $televisione) {
 
     }
 
-    /**
-     * @return int
-     */
     public function showChannel(): int
     {
         return $this->televisione->getChannel();
     }
 
-    /**
-     * @param int $channel
-     */
+    public function showVolume(): int
+    {
+        return $this->televisione->getVolume();
+    }
+
     public function setChannel(int $channel): void
     {
         $this->televisione->setChannel($channel);
     }
     public function volumeUp(): void
     {
-        $this->televisione->setVolume(true);
+        $volume = $this->televisione->getVolume() + 1;
+        $this->televisione->setVolume($volume);
     }
 
     public function volumeDown(): void
     {
-        $this->televisione->setVolume(false);
+        $volume = $this->televisione->getVolume() - 1;
+        $this->televisione->setVolume($volume);
     }
 
     public function channelUp(): void
