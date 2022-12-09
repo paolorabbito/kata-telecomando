@@ -7,15 +7,21 @@ namespace Telecomando;
 use PHPUnit\Framework\TestCase;
 use Telecomando\Domain\Telecomando\Telecomando;
 use Telecomando\Domain\Televisione\Televisione;
+use Telecomando\Domain\Televisione\TelevisioneRepository;
+use Telecomando\Mock\InMemoryTelevisioneRepository;
 
 class TelecomandoTest extends TestCase
 {
 
+    //TODO: Add TelevisioneInMemoryRepository
+
     private Telecomando $telecomando;
+    private InMemoryTelevisioneRepository $televisione;
 
     protected function setUp(): void
     {
-        $this->telecomando = new Telecomando(new Televisione());
+        $this->televisione = new InMemoryTelevisioneRepository();
+        $this->telecomando = new Telecomando($this->televisione);
     }
 
     public function testShouldSetChannel()
@@ -38,6 +44,16 @@ class TelecomandoTest extends TestCase
 
         $this->telecomando->volumeDown();
         $this->assertEquals(50, $this->telecomando->showVolume());
+    }
+
+    public function testShouldTurnOnAndOff() {
+
+        $this->telecomando->onAndOff();
+        $this->assertEquals(true, $this->televisione->isOn());
+
+        $this->telecomando->onAndOff();
+        $this->assertEquals(false, $this->televisione->isOn());
+
     }
 
 }
