@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Telecomando;
 
 use PHPUnit\Framework\TestCase;
+use Telecomando\Controller\TelecomandoController;
 
 class TelecomandoControllerTest extends TestCase
 {
