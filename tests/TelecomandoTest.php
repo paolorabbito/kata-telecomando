@@ -6,14 +6,10 @@ namespace Telecomando;
 
 use PHPUnit\Framework\TestCase;
 use Telecomando\Domain\Telecomando\Telecomando;
-use Telecomando\Domain\Televisione\Televisione;
-use Telecomando\Domain\Televisione\TelevisioneRepository;
 use Telecomando\Mock\InMemoryTelevisioneRepository;
 
 class TelecomandoTest extends TestCase
 {
-
-    //TODO: Add TelevisioneInMemoryRepository
 
     private Telecomando $telecomando;
     private InMemoryTelevisioneRepository $televisione;
