@@ -8,19 +8,19 @@ use Telecomando\Televisione\ITelevisione;
 class Telecomando
 {
 
-    private $televisione;
+    private ITelevisione $televisione;
 
     public function __construct (ITelevisione $televisione)
     {
-        $this->$televisione = $televisione;
+        $this->televisione = $televisione;
     }
 
-    public function volumeUp (): void {
-        $this->televisione->volumeUp();
+    public function volumeUp (int $amount): void {
+        $this->televisione->volumeUp($amount);
     }
 
-    public function volumeDown (): void {
-        $this->televisione->volumeDown();
+    public function volumeDown (int $amount): void {
+        $this->televisione->volumeDown($amount);
     }
 
     public function channelUp (): void {
@@ -29,6 +29,14 @@ class Telecomando
 
     public function channelDown (): void {
         $this->televisione->channelDown();
+    }
+
+    public function changeChannel (int $channel): void {
+        $this->televisione->changeChannel($channel);
+    }
+
+    public function switchState (): void {
+        $this->televisione->switchState();
     }
 
 }

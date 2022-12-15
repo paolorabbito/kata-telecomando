@@ -2,6 +2,8 @@
 
 namespace Telecomando\Televisione;
 
+use http\Exception\InvalidArgumentException;
+
 class Televisione implements ITelevisione
 {
 
@@ -17,23 +19,73 @@ class Televisione implements ITelevisione
     }
 
     public function volumeUp (int $amount): void {
-        $this->setVolume($this->televisione->volume + $amount);
+        $newVolume = $this->volume + $amount;
+        if ($newVolume > 10) {
+            throw new \InvalidArgumentException('Max Volume is 10');
+        }
+        $this->volume = $newVolume;
     }
 
     public function volumeDown (int $amount): void {
-        $this->setVolume($this->volume - $amount);
+        $newVolume = $this->volume - $amount;
+        if ($newVolume > 10) {
+            throw new \InvalidArgumentException('Min Volume is 0');
+        }
+        $this->volume = $newVolume;
+    }
+
+    private function isValidChannel ($channel) {
+        if ($channel <= 1000 && $channel > 0) {
+            return true;
+        }
+        return false;
     }
 
     public function channelUp (): void {
-        $this->setVolume($this->channel + 1);
+        $newChannel = $this->channel + 1;
+        if (!$this->isValidChannel($newChannel)) {
+            throw new \InvalidArgumentException('Not a valid channel');
+        }
+        $this->channel = $newChannel;
     }
 
     public function channelDown (): void {
-        $this->setVolume($this->channel - 1);
+        $newChannel = $this->channel - 1;
+        if (!$this->isValidChannel($newChannel)) {
+            throw new \InvalidArgumentException('Not a valid channel');
+        }
+        $this->channel = $newChannel;
     }
 
     public function changeChannel (int $channel): void {
-        $this->setChannel($channel);
+        if (!$this->isValidChannel($channel)) {
+            throw new \InvalidArgumentException('Not a valid channel');
+        }
+        $this->channel = $channel;
+    }
+
+    public function switchState (): void {
+        if ($this->state == StatoTelevisione::OFF) {
+            $this->state = StatoTelevisione::ON;
+        }
+        else {
+            $this->state = StatoTelevisione::OFF;
+        }
+    }
+
+    public function getState(): StatoTelevisione
+    {
+        return $this->state;
+    }
+
+    public function getChannel(): int
+    {
+        return $this->channel;
+    }
+
+    public function getVolume(): int
+    {
+        return $this->volume;
     }
 
 }

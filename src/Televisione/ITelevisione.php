@@ -15,4 +15,6 @@ interface ITelevisione
 
     public function changeChannel (int $channel): void;
 
+    public function switchState (): void;
+
 }
